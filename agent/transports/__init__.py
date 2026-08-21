@@ -62,6 +62,13 @@ def _discover_transports() -> None:
         import agent.transports.chat_completions  # noqa: F401
     except ImportError:
         pass
+    # Local KV optimization deliberately registers after the stock Chat
+    # Completions transport so it can wrap only that registry entry. Direct
+    # imports of ChatCompletionsTransport remain unchanged.
+    try:
+        import agent.transports.local_sticky_skills  # noqa: F401
+    except ImportError:
+        pass
     try:
         import agent.transports.bedrock  # noqa: F401
     except ImportError:
